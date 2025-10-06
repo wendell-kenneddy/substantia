@@ -1,0 +1,37 @@
+#main-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem; // 40px
+}
+
+.main-menu-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem; // 24px
+
+  button {
+    background: none;
+    position: relative;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem; // 40px
+    color: var(--light-gray);
+    transition: color 0.2s;
+
+    &:hover::after {
+      content: "";
+      position: absolute;
+      width: 422px;
+      height: 222px;
+      background: url("/highlight-texture.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: inline-block;
+    }
+  }
+}
