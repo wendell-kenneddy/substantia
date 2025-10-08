@@ -1,0 +1,84 @@
+.game-ui-section {
+  width: 90vw;
+  width: 1364px;
+  height: 90vh;
+  max-height: 932px;
+  margin: 2rem auto; // 48px auto
+  border: 1px solid var(--light-gray);
+  border-radius: 3.125rem; // 50px
+}
+
+.game-ui-section-toolbar {
+  margin: 3rem 3rem 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Outfit";
+}
+
+.game-ui-section-stats {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; // 24px
+
+  .game-ui-section-stats-element {
+    background: rgba(255, 247, 204, 0.1);
+    width: 16rem; // 256px
+    height: 2.5rem; // 40px
+    border-radius: 1rem;
+    border: 1px solid var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+
+    .game-ui-section-stats-progress-bar-container {
+      background: rgba(255, 255, 255, 0.2);
+      width: 5rem; // 80px
+      height: 0.25rem; // 4px
+
+      .game-ui-section-stats-progress-bar {
+        height: 100%;
+        background: var(--light-gray);
+        width: 50%;
+      }
+    }
+
+    .game-ui-section-stats-counter {
+      font-size: 0.75rem; // 12px
+      font-weight: 700;
+    }
+  }
+
+  button {
+    background: rgba(142, 108, 154, 0.5);
+    width: 10rem; // 160px
+    height: 2.5rem; // 40px
+    border: 1px solid var(--light-gray);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.375rem; // 22px
+    font-weight: 500;
+    color: var(--white);
+    opacity: 0.75;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+#open-game-settings-button {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.75;
+
+  &:hover {
+    opacity: 1;
+  }
+}
