@@ -11,12 +11,23 @@ export class ApplicationContext {
   private startGameButton: HTMLButtonElement = document.getElementById(
     "start-game-button"
   ) as HTMLButtonElement;
+  private settingsMenu: HTMLElement = document.getElementById("settings-menu") as HTMLElement;
+  private openGameSettingsMenuButton: HTMLButtonElement = document.getElementById(
+    "open-game-settings-menu-button"
+  ) as HTMLButtonElement;
+  private goBackToMainMenuButton: HTMLButtonElement = document.getElementById(
+    "go-back-to-main-menu-button"
+  ) as HTMLButtonElement;
+  private mainMenuListenersSet: boolean = false;
+  private inGameListenersSet: boolean = false;
 
   public run(): void {
-    this.setupMainMenuListeners();
+    this.addMainMenuListeners();
   }
 
-  private setupMainMenuListeners(): void {
+  private addMainMenuListeners(): void {
+    if (this.mainMenuListenersSet) return;
+
     this.openHowToPlayModalButton.addEventListener("click", () => {
       this.mainMenuSection.classList.add("hidden");
       this.howToPlayModal.classList.remove("hidden");
@@ -30,6 +41,29 @@ export class ApplicationContext {
     this.startGameButton.addEventListener("click", () => {
       this.mainMenuSection.classList.add("hidden");
       this.gameUI.classList.remove("hidden");
+      this.addInGameListeners();
     });
+
+    this.mainMenuListenersSet = true;
+  }
+
+  private addInGameListeners(): void {
+    if (this.inGameListenersSet) return;
+
+    this.openGameSettingsMenuButton.addEventListener("click", () => {
+      if (this.settingsMenu.classList.contains("hidden"))
+        this.settingsMenu.classList.remove("hidden");
+      else {
+        this.settingsMenu.classList.add("hidden");
+      }
+    });
+
+    this.goBackToMainMenuButton.addEventListener("click", () => {
+      this.settingsMenu.classList.add("hidden");
+      this.gameUI.classList.add("hidden");
+      this.mainMenuSection.classList.remove("hidden");
+    });
+
+    this.inGameListenersSet = true;
   }
 }
