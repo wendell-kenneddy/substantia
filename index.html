@@ -43,7 +43,12 @@
                 <p>Arraste o Sujeito até um Objeto</p>
               </div>
 
-              <img src="/observar.png" alt="Ícone de um personagem observando novo conhecimento" width="150" height="150"/>
+              <img
+                src="/observar.png"
+                alt="Ícone de um personagem observando novo conhecimento"
+                width="150"
+                height="150"
+              />
 
               <div class="paragrafo">
                 <p>
@@ -60,7 +65,12 @@
                 <p>Repita a observação com o máximo de Objetos diferentes</p>
               </div>
 
-              <img src="/explorar.png" alt="Imagem de um personagem explorando o desconhecido" width="150" height="150"/>
+              <img
+                src="/explorar.png"
+                alt="Imagem de um personagem explorando o desconhecido"
+                width="150"
+                height="150"
+              />
 
               <div class="paragrafo">
                 <p>Você constrói a base de dados (o Livro) necessária para sua teória.</p>
@@ -88,7 +98,12 @@
                 <p>Clique em "Teste Final" e preencha o Forms com sua conclusão.</p>
               </div>
 
-              <img src="/provar.png" alt="Imagem de um formulário para formulação de hipótese." width="150" height="150"/>
+              <img
+                src="/provar.png"
+                alt="Imagem de um formulário para formulação de hipótese."
+                width="150"
+                height="150"
+              />
 
               <div class="paragrafo">
                 <p>O sistema valida sua resposta contra a regra verdadeira e oculta do nível.</p>
@@ -190,9 +205,16 @@
             </button>
           </div>
 
-          <button id="open-game-settings-button" name="Abrir configurações">
-            <img src="/cog.svg" alt="Ícone de engrenagem" width="40" height="40" />
-          </button>
+          <div id="settings-menu-wrapper">
+            <button id="open-game-settings-menu-button" name="Abrir configurações">
+              <img src="/cog.svg" alt="Ícone de engrenagem" width="40" height="40" />
+            </button>
+
+            <div id="settings-menu" class="hidden">
+              <button id="go-back-to-main-menu-button">menu principal</button>
+              <button>como jogar</button>
+            </div>
+          </div>
         </div>
       </section>
     </main>
