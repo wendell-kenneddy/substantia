@@ -18,6 +18,9 @@ export class ApplicationContext {
   private goBackToMainMenuButton: HTMLButtonElement = document.getElementById(
     "go-back-to-main-menu-button"
   ) as HTMLButtonElement;
+  private openHowToPlayModalButtonInGame: HTMLButtonElement = document.getElementById(
+    "open-how-to-play-modal-button-in-game"
+  ) as HTMLButtonElement;
   private playerBookModal: HTMLElement = document.getElementById(
     "player-book-modal"
   ) as HTMLElement;
@@ -38,13 +41,11 @@ export class ApplicationContext {
     if (this.mainMenuListenersSet) return;
 
     this.openHowToPlayModalButton.addEventListener("click", () => {
-      this.mainMenuSection.classList.add("hidden");
       this.howToPlayModal.classList.remove("hidden");
     });
 
     this.closeHowToPlayModalButton.addEventListener("click", () => {
       this.howToPlayModal.classList.add("hidden");
-      this.mainMenuSection.classList.remove("hidden");
     });
 
     this.startGameButton.addEventListener("click", () => {
@@ -79,6 +80,10 @@ export class ApplicationContext {
       this.settingsMenu.classList.add("hidden");
       this.gameUI.classList.add("hidden");
       this.mainMenuSection.classList.remove("hidden");
+    });
+
+    this.openHowToPlayModalButtonInGame.addEventListener("click", () => {
+      this.howToPlayModal.classList.remove("hidden");
     });
 
     this.inGameListenersSet = true;
