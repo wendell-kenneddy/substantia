@@ -58,6 +58,14 @@ export class ApplicationContext {
       }
     });
 
+    this.openPlayerBookModalButton.addEventListener("click", () => {
+      this.playerBookModal.classList.remove("hidden");
+    });
+
+    this.closePlayerBookModalButton.addEventListener("click", () => {
+      this.playerBookModal.classList.add("hidden");
+    });
+
     this.goBackToMainMenuButton.addEventListener("click", () => {
       this.settingsMenu.classList.add("hidden");
       this.gameUI.classList.add("hidden");
