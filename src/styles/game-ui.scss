@@ -120,3 +120,24 @@
     }
   }
 }
+
+#player-book {
+  position: relative;
+  width: 994px;
+  height: 804px;
+  background: url("/book.png");
+  z-index: 100;
+
+  #close-player-book-modal-button {
+    position: absolute;
+    top: 0;
+    right: -2rem;
+    background: none;
+    border: none;
+    opacity: 0.75;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
