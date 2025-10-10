@@ -18,6 +18,15 @@ export class ApplicationContext {
   private goBackToMainMenuButton: HTMLButtonElement = document.getElementById(
     "go-back-to-main-menu-button"
   ) as HTMLButtonElement;
+  private playerBookModal: HTMLElement = document.getElementById(
+    "player-book-modal"
+  ) as HTMLElement;
+  private openPlayerBookModalButton: HTMLButtonElement = document.getElementById(
+    "open-player-book-modal-button"
+  ) as HTMLButtonElement;
+  private closePlayerBookModalButton: HTMLButtonElement = document.getElementById(
+    "close-player-book-modal-button"
+  ) as HTMLButtonElement;
   private mainMenuListenersSet: boolean = false;
   private inGameListenersSet: boolean = false;
 
