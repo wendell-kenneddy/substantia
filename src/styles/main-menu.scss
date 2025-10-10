@@ -22,16 +22,8 @@
     color: var(--light-gray);
     transition: color 0.2s;
 
-    &:hover::after {
-      content: "";
-      position: absolute;
-      width: 422px;
-      height: 222px;
-      background: url("/highlight-texture.png");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      display: inline-block;
+    &:hover {
+      color: var(--white);
     }
   }
 }
