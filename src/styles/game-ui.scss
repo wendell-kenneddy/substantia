@@ -1,9 +1,13 @@
 .game-ui-section {
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  right: 0;
   width: 90vw;
   width: 1364px;
   height: 90vh;
   max-height: 932px;
-  margin: 2rem auto; // 48px auto
+  margin: 0 auto; // 48px auto
   border: 1px solid var(--light-gray);
   border-radius: 3.125rem; // 50px
 }
@@ -70,7 +74,7 @@
   }
 }
 
-#open-game-settings-button {
+#open-game-settings-menu-button {
   background: none;
   border: none;
   display: flex;
@@ -80,5 +84,39 @@
 
   &:hover {
     opacity: 1;
+  }
+}
+
+#settings-menu-wrapper {
+  position: relative;
+}
+
+#settings-menu {
+  background: rgba(7, 2, 7, 0.3);
+  position: absolute;
+  min-width: 10rem;
+  top: 3rem; // 48px
+  right: 1rem;
+  border: 1px solid rgba(255, 248, 240, 1);
+  border-radius: 2rem; // 32px
+  padding: 1.5rem 1rem; // 24px 16px
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem; // 12px
+
+  button {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-family: "Outfit", sans-serif;
+    font-weight: 600;
+    color: var(--light-gray);
+
+    &:hover {
+      color: var(--white);
+    }
   }
 }
