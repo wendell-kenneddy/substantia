@@ -41,6 +41,11 @@
         justify-self: end;
         grid-column: 3;
         margin: 1rem; // 16px
+        opacity: 0.75;
+
+        &:hover {
+          opacity: 1;
+        }
       }
     }
 
