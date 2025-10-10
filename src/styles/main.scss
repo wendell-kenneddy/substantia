@@ -106,3 +106,16 @@ main {
 .hidden {
   display: none !important;
 }
+
+.highlight-texture:hover::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 420px;
+  height: 215px;
+  background: url("/highlight-texture.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+}
