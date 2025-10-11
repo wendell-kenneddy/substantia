@@ -198,7 +198,7 @@
               <span id="action-points-counter" class="game-ui-section-stats-counter">69 anos</span>
             </div>
 
-            <button id="final-test-button">Teste final</button>
+            <button id="open-theory-modal-button">Formular teoria</button>
 
             <button id="open-player-book-modal-button" name="Abrir livro de anotações">
               <img src="/book.png" alt="Ícone de livro" width="84" height="69" />
@@ -222,6 +222,78 @@
                 <img src="/x.png" alt="Ícone de um X" width="48" height="48" />
               </button>
             </div>
+          </div>
+
+          <div id="theory-modal-overlay" class="modal-overlay hidden">
+            <form action="#" id="theory-form">
+              <header>
+                <h2>formule sua teoria</h2>
+
+                <button
+                  type="button"
+                  id="close-theory-modal-button"
+                  name="Fechar formulário de teoria"
+                >
+                  <img src="/x.png" alt="Ícone de um X" width="40" height="40" />
+                </button>
+              </header>
+
+              <div class="theory-form-hipothesis-wrapper">
+                <h3>Cubos</h3>
+
+                <div class="input-group">
+                  <select name="squares-color-appearence" id="squares-color-appearence">
+                    <option value="cant-be-of-chosen-color">jamais podem ser</option>
+                    <option value="can-be-of-chosen-color">podem ser</option>
+                    <option value="only-of-chosen-color">podem ser somente</option>
+                  </select>
+
+                  <select name="squares-color" id="squares-color">
+                    <option value="red">vermelho(a)s</option>
+                    <option value="blue">azuis</option>
+                    <option value="yellow">amarelo(a)s</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="theory-form-hipothesis-wrapper">
+                <h3>Pirâmides</h3>
+
+                <div class="input-group">
+                  <select name="triangles-color-appearence" id="triangles-color-appearence">
+                    <option value="cant-be-of-chosen-color">jamais podem ser</option>
+                    <option value="can-be-of-chosen-color">podem ser</option>
+                    <option value="only-of-chosen-color">podem somente ser</option>
+                  </select>
+
+                  <select name="triangles-color" id="triangles-color">
+                    <option value="red">vermelho(a)s</option>
+                    <option value="blue">azuis</option>
+                    <option value="yellow">amarelo(a)s</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="theory-form-hipothesis-wrapper">
+                <h3>Esferas</h3>
+
+                <div class="input-group">
+                  <select name="circles-color-appearence" id="circles-color-appearence">
+                    <option value="cant-be-of-chosen-color">jamais podem ser</option>
+                    <option value="can-be-of-chosen-color">podem ser</option>
+                    <option value="only-of-chosen-color">podem ser somente</option>
+                  </select>
+
+                  <select name="circles-color" id="circles-color">
+                    <option value="red">vermelho(a)s</option>
+                    <option value="blue">azuis</option>
+                    <option value="yellow">amarelo(a)s</option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="submit" id="validate-theory-button">Validar teoria</button>
+            </form>
           </div>
         </div>
       </section>
