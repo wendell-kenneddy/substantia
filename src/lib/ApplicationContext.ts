@@ -30,6 +30,18 @@ export class ApplicationContext {
   private closePlayerBookModalButton: HTMLButtonElement = document.getElementById(
     "close-player-book-modal-button"
   ) as HTMLButtonElement;
+  private theoryModal: HTMLElement = document.getElementById(
+    "theory-modal-overlay"
+  ) as HTMLButtonElement;
+  private openTheoryModalButton: HTMLButtonElement = document.getElementById(
+    "open-theory-modal-button"
+  ) as HTMLButtonElement;
+  private closeTheoryModalButton: HTMLButtonElement = document.getElementById(
+    "close-theory-modal-button"
+  ) as HTMLButtonElement;
+  private validateTheoryButton: HTMLButtonElement = document.getElementById(
+    "validate-theory-button"
+  ) as HTMLButtonElement;
   private mainMenuListenersSet: boolean = false;
   private inGameListenersSet: boolean = false;
 
@@ -86,6 +98,20 @@ export class ApplicationContext {
       this.howToPlayModal.classList.remove("hidden");
     });
 
+    this.openTheoryModalButton.addEventListener("click", () => {
+      this.theoryModal.classList.remove("hidden");
+    });
+
+    this.closeTheoryModalButton.addEventListener("click", () => {
+      this.theoryModal.classList.add("hidden");
+    });
+
+    this.validateTheoryButton.addEventListener("click", this.validateTheory);
+
     this.inGameListenersSet = true;
+  }
+
+  private validateTheory(e: Event): void {
+    e.preventDefault();
   }
 }

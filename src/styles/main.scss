@@ -118,7 +118,8 @@ body {
 }
 
 .modal-overlay {
-  background: rgba($color: #000, $alpha: 0.6);
+  background: rgba($color: #000, $alpha: 0.2);
+  backdrop-filter: blur(4px);
   width: 100vw;
   height: 100vh;
   position: fixed;

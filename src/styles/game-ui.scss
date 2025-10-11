@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   width: 90vw;
-  width: 1364px;
+  max-width: 1364px;
   height: 90vh;
   max-height: 932px;
   margin: 0 auto; // 48px auto
@@ -13,7 +13,7 @@
 }
 
 .game-ui-section-toolbar {
-  margin: 3rem 3rem 0 3rem;
+  margin: 3rem 3rem 0 3rem; // 48px 48px 0 48px
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,18 +27,19 @@
 
   .game-ui-section-stats-element {
     background: rgba(255, 247, 204, 0.1);
-    width: 16rem; // 256px
+    padding: 0 1.5rem; // 0 24px
     height: 2.5rem; // 40px
-    border-radius: 1rem;
+    border-radius: 1rem; // 16px
     border: 1px solid var(--light-gray);
     display: flex;
     align-items: center;
+    gap: 1rem; // 16px
     justify-content: space-between;
-    padding: 0 1.5rem;
+    padding: 0 1.5rem; // 0 24px
 
     .game-ui-section-stats-progress-bar-container {
       background: rgba(255, 255, 255, 0.2);
-      width: 5rem; // 80px
+      width: 8.625rem; // 138px
       height: 0.25rem; // 4px
 
       .game-ui-section-stats-progress-bar {
@@ -56,7 +57,7 @@
 
   button {
     background: rgba(142, 108, 154, 0.5);
-    width: 10rem; // 160px
+    padding: 0 2rem;
     height: 2.5rem; // 40px
     border: 1px solid var(--light-gray);
     border-radius: 1rem;
@@ -135,6 +136,91 @@
     background: none;
     border: none;
     opacity: 0.75;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+#theory-form {
+  padding: 4rem; // 64px
+  border: 1px solid rgba(255, 248, 240, 0.3);
+  border-radius: 2.5rem; // 40px
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  font-family: "Outfit", sans-serif;
+
+  header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+      font-family: "Mansalva", sans-serif;
+      font-size: 2.5rem; // 40px
+    }
+    button {
+      background: none;
+      border: none;
+      opacity: 0.75;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .theory-form-hipothesis-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+
+    h3 {
+      font-size: 1.25rem;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      select {
+        background: rgba(27, 24, 27, 1);
+        border: none;
+        border-radius: 1rem;
+        padding: 1rem 1.5rem;
+        font-size: 1.25rem;
+        color: var(--white);
+
+        option {
+          color: var(--light-gray);
+
+          &:hover {
+            color: var(--white);
+          }
+        }
+      }
+    }
+  }
+
+  #validate-theory-button {
+    background: rgba(142, 108, 154, 0.5);
+    border: 1px solid rgba(127, 140, 141, 1);
+    border-radius: 1rem; // 16px
+    padding: 0.5rem 3rem; // 16px 48px
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem; // 24px
+    font-weight: 600;
+    opacity: 0.75;
+    color: var(--white);
 
     &:hover {
       opacity: 1;
