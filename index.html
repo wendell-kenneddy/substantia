@@ -27,7 +27,7 @@
         </div>
       </section>
 
-      <section id="how-to-play" class="modal-overlay hidden">
+      <section id="how-to-play-modal" class="modal-overlay hidden">
         <div id="how-to-play-container">
           <div id="titulo">
             <h2 id="como-jogar">como jogar</h2>
@@ -186,16 +186,16 @@
             </div>
 
             <div class="game-ui-section-stats-element">
-              <img src="/clock.svg" alt="Ícone de lâmpada" width="24" height="24" />
+              <img src="/clock.svg" alt="Ícone de relógio" width="24" height="24" />
 
               <div class="game-ui-section-stats-progress-bar-container">
                 <div
-                  id="action-points-progress-bar"
+                  id="elapsed-time-progress-bar"
                   class="game-ui-section-stats-progress-bar"
                 ></div>
               </div>
 
-              <span id="action-points-counter" class="game-ui-section-stats-counter">69 anos</span>
+              <span id="elapsed-time-counter" class="game-ui-section-stats-counter">69 anos</span>
             </div>
 
             <button id="open-theory-modal-button">Formular teoria</button>
@@ -218,13 +218,11 @@
 
           <div id="player-book-modal" class="modal-overlay hidden">
             <div id="player-book">
-              <button id="close-player-book-modal-button" name="Fechar livro">
-                <img src="/x.png" alt="Ícone de um X" width="48" height="48" />
-              </button>
+              <button id="close-player-book-modal-button" name="Fechar livro"></button>
             </div>
           </div>
 
-          <div id="theory-modal-overlay" class="modal-overlay hidden">
+          <div id="theory-modal" class="modal-overlay hidden">
             <form action="#" id="theory-form">
               <header>
                 <h2>formule sua teoria</h2>
@@ -233,9 +231,7 @@
                   type="button"
                   id="close-theory-modal-button"
                   name="Fechar formulário de teoria"
-                >
-                  <img src="/x.png" alt="Ícone de um X" width="40" height="40" />
-                </button>
+                ></button>
               </header>
 
               <div class="theory-form-hipothesis-wrapper">
@@ -296,6 +292,8 @@
             </form>
           </div>
         </div>
+
+        <div id="game-ui-playable-area"></div>
       </section>
     </main>
 
