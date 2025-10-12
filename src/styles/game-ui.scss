@@ -227,3 +227,69 @@
     }
   }
 }
+
+.entity {
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+
+  .entity-unknown-shape {
+    width: 4rem;
+    height: 4rem;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: -6.5rem;
+      left: -6.5rem;
+      z-index: -1;
+      width: 250px;
+      height: 250px;
+      background: url("/mist-texture.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: inline-block;
+    }
+  }
+
+  .entity-shape {
+    width: 4rem;
+    height: 4rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.cube {
+      background-image: url("/cube.svg");
+    }
+
+    &.pyramid {
+      background-image: url("/pyramid.svg");
+    }
+
+    &.sphere {
+      background-image: url("/sphere.svg");
+    }
+
+    &.green {
+      filter: hue-rotate(90deg);
+    }
+
+    &.blue {
+      filter: hue-rotate(180deg);
+    }
+
+    &.pink {
+      filter: hue-rotate(270deg);
+    }
+
+    &.red {
+      filter: hue-rotate(310deg) saturate(3);
+    }
+  }
+}
