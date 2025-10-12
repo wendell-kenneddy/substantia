@@ -1,4 +1,4 @@
-#how-to-play {
+#how-to-play-modal {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -90,7 +90,6 @@
           border-radius: 1.563rem; // 25px
           border: 1px, solid, #ffffff4d;
           margin-bottom: 1rem; // 16px
-
         }
       }
     }
@@ -126,7 +125,7 @@
 
     #lampada {
       background-color: #fff7cc1a;
-      border-radius: 1.563rem; // 25px 
+      border-radius: 1.563rem; // 25px
       border: 1px solid #7f8c8d;
       padding: 0.3rem; // 4.8px
       display: flex;
