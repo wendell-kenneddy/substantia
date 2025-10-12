@@ -13,6 +13,9 @@ export class ApplicationContext {
 
   private registerUIComponents(): void {
     this.registerHowToPlayModalUIComponent();
+    this.registerAboutModalUIComponent();
+    this.registerOpenAboutModalButtonUIComponent();
+    this.registerCloseAboutModalButtonUIComponent();
     this.registerMainMenuUIComponent();
     this.registerGameUIComponent();
     this.registerProgressBarUIComponents();
@@ -26,6 +29,8 @@ export class ApplicationContext {
 
   private attachUIComponentsActions(): void {
     this.attachHowToPlayModalActions();
+    this.attachOpenAboutModalButtonActions();
+    this.attachCloseAboutModalButtonActions();
     this.attachMainMenuActions();
     this.attachSettingsMenuActions();
     this.attachOpenSettingsMenuButtonActions();
@@ -54,6 +59,43 @@ export class ApplicationContext {
         const HTMLElement: HTMLElement = target as HTMLElement;
 
         if (HTMLElement.id == "close-how-to-play-modal-button") howToPlayModal.hide();
+      })
+    );
+  }
+
+  private registerAboutModalUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("about-modal"));
+  }
+
+  private registerOpenAboutModalButtonUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("open-about-modal-button"));
+  }
+
+  private attachOpenAboutModalButtonActions(): void {
+    const openAboutModalButton: UIComponent =
+      this._UIManager.getComponentById("open-about-modal-button");
+
+    openAboutModalButton.attachAction(
+      new Action("click", (e) => {
+        const aboutModal: UIComponent = this._UIManager.getComponentById("about-modal");
+        aboutModal.show();
+      })
+    );
+  }
+
+  private registerCloseAboutModalButtonUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("close-about-modal-button"));
+  }
+
+  private attachCloseAboutModalButtonActions(): void {
+    const closeAboutModalButton: UIComponent = this._UIManager.getComponentById(
+      "close-about-modal-button"
+    );
+
+    closeAboutModalButton.attachAction(
+      new Action("click", (e) => {
+        const aboutModal: UIComponent = this._UIManager.getComponentById("about-modal");
+        aboutModal.hide();
       })
     );
   }
