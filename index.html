@@ -27,7 +27,7 @@
         </div>
       </section>
 
-      <section id="how-to-play" class="modal-overlay hidden">
+      <section id="how-to-play-modal" class="modal-overlay hidden">
         <div id="how-to-play-container">
           <div id="title">
             <h2 id="como-jogar">como jogar</h2>
@@ -169,7 +169,7 @@
         </div>
       </section>
 
-      <section id="about" class="modal-overlay hidden">
+      <section id="about-modal" class="modal-overlay hidden">
         <div id="about-container">
           <div id="close-about-modal-container">
             <button id="close-about-modal-button"></button>
@@ -178,30 +178,48 @@
           <div id="about-first-container">
             <h2>Sobre</h2>
 
-            <p><strong>Substantia</strong>, mais do que um jogo, é uma jornada interativa pela teoria do conhecimento. Inspirado pelo tema <strong>sujeito, objeto e construção de conhecimento</strong> da filosofia da ciência, o jogo explora a natureza da percepção e a criação de hipóteses.</p>
+            <p>
+              <strong>Substantia</strong>, mais do que um jogo, é uma jornada interativa pela teoria
+              do conhecimento. Inspirado pelo tema
+              <strong>sujeito, objeto e construção de conhecimento</strong> da filosofia da ciência,
+              o jogo explora a natureza da percepção e a criação de hipóteses.
+            </p>
 
-            <p>Navegue pelo vazio da mente, um espaço onde cada objeto é um fragmento de um mundo maior. Sua única missão é observar, conectar e, por fim, <strong>formular sua própria verdade</strong>.</p>
+            <p>
+              Navegue pelo vazio da mente, um espaço onde cada objeto é um fragmento de um mundo
+              maior. Sua única missão é observar, conectar e, por fim,
+              <strong>formular sua própria verdade</strong>.
+            </p>
           </div>
 
           <div id="about-second-container">
             <h2>Objetivo</h2>
 
-            <p><strong>Substantia</strong> é um protótipo construído como trabalho final para a disciplina de <strong>Filosofia da Ciência</strong>, no curso de<strong> Ciência da Computação</strong>. Nosso objetivo foi traduzir o conceito abstrato do conhecimento empírico e da construção de hipóteses em uma experiência visual e interativa.</p>
+            <p>
+              <strong>Substantia</strong> é um protótipo construído como trabalho final para a
+              disciplina de <strong>Filosofia da Ciência</strong>, no curso de<strong>
+                Ciência da Computação</strong
+              >. Nosso objetivo foi traduzir o conceito abstrato do conhecimento empírico e da
+              construção de hipóteses em uma experiência visual e interativa.
+            </p>
           </div>
 
           <div id="about-third-container">
             <h2>Créditos</h2>
             <div>
-              <p>Regras de Negócio<br><strong>Enrique da Silva</strong></p>
-              <p>Protótipo e UI/UX<br><strong>Jeremias Santos</strong></p>
+              <p>Regras de Negócio<br /><strong>Enrique da Silva</strong></p>
+              <p>Protótipo e UI/UX<br /><strong>Jeremias Santos</strong></p>
 
-              <p>Lógica da Aplicação (TypeScript)<br><strong>Wendell da Silva e Daniel Mendes</strong></p>
+              <p>
+                Lógica da Aplicação (TypeScript)<br /><strong
+                  >Wendell da Silva e Daniel Mendes</strong
+                >
+              </p>
 
-              <p>Estilização (CSS)<br><strong>Samuel de Souza</strong></p>
+              <p>Estilização (CSS)<br /><strong>Samuel de Souza</strong></p>
             </div>
           </div>
         </div>
-
       </section>
 
       <section id="game-ui" class="game-ui-section hidden">
@@ -221,16 +239,16 @@
             </div>
 
             <div class="game-ui-section-stats-element">
-              <img src="/clock.svg" alt="Ícone de lâmpada" width="24" height="24" />
+              <img src="/clock.svg" alt="Ícone de relógio" width="24" height="24" />
 
               <div class="game-ui-section-stats-progress-bar-container">
                 <div
-                  id="action-points-progress-bar"
+                  id="elapsed-time-progress-bar"
                   class="game-ui-section-stats-progress-bar"
                 ></div>
               </div>
 
-              <span id="action-points-counter" class="game-ui-section-stats-counter">69 anos</span>
+              <span id="elapsed-time-counter" class="game-ui-section-stats-counter">69 anos</span>
             </div>
 
             <button id="open-theory-modal-button">Formular teoria</button>
@@ -253,13 +271,11 @@
 
           <div id="player-book-modal" class="modal-overlay hidden">
             <div id="player-book">
-              <button id="close-player-book-modal-button" name="Fechar livro">
-                <img src="/x.png" alt="Ícone de um X" width="48" height="48" />
-              </button>
+              <button id="close-player-book-modal-button" name="Fechar livro"></button>
             </div>
           </div>
 
-          <div id="theory-modal-overlay" class="modal-overlay hidden">
+          <div id="theory-modal" class="modal-overlay hidden">
             <form action="#" id="theory-form">
               <header>
                 <h2>formule sua teoria</h2>
@@ -268,9 +284,7 @@
                   type="button"
                   id="close-theory-modal-button"
                   name="Fechar formulário de teoria"
-                >
-                  <img src="/x.png" alt="Ícone de um X" width="40" height="40" />
-                </button>
+                ></button>
               </header>
 
               <div class="theory-form-hipothesis-wrapper">
@@ -331,6 +345,8 @@
             </form>
           </div>
         </div>
+
+        <div id="game-ui-playable-area"></div>
       </section>
     </main>
 

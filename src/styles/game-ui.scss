@@ -1,19 +1,18 @@
 .game-ui-section {
   position: absolute;
-  top: 2rem;
+  top: 2rem; // 32px
   left: 0;
   right: 0;
-  width: 90vw;
-  max-width: 1364px;
-  height: 90vh;
-  max-height: 932px;
+  width: 1364px;
+  height: 800px;
   margin: 0 auto; // 48px auto
   border: 1px solid var(--light-gray);
   border-radius: 3.125rem; // 50px
 }
 
 .game-ui-section-toolbar {
-  margin: 3rem 3rem 0 3rem; // 48px 48px 0 48px
+  padding: 3rem; // 48px
+  border-bottom: 1px solid var(--light-gray);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -75,6 +74,12 @@
   }
 }
 
+#game-ui-playable-area {
+  width: 100%;
+  height: 659px;
+  border-radius: 0 0 3.125rem 3.125rem; // 0 0 50px 50px
+}
+
 #open-game-settings-menu-button {
   background: none;
   border: none;
@@ -95,9 +100,9 @@
 #settings-menu {
   background: rgba(7, 2, 7, 0.3);
   position: absolute;
-  min-width: 10rem;
+  min-width: 10rem; // 160px
   top: 3rem; // 48px
-  right: 1rem;
+  right: 1rem; // 16px
   border: 1px solid rgba(255, 248, 240, 1);
   border-radius: 2rem; // 32px
   padding: 1.5rem 1rem; // 24px 16px
@@ -130,10 +135,15 @@
   z-index: 100;
 
   #close-player-book-modal-button {
+    background: transparent url("/x.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 2.5rem;
+    height: 2.5rem;
     position: absolute;
     top: 0;
     right: -2rem;
-    background: none;
     border: none;
     opacity: 0.75;
 
@@ -163,8 +173,15 @@
       font-family: "Mansalva", sans-serif;
       font-size: 2.5rem; // 40px
     }
-    button {
-      background: none;
+
+    button#close-theory-modal-button {
+      background-color: transparent;
+      background-image: url("/x.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      width: 2.5rem;
+      height: 2.5rem;
       border: none;
       opacity: 0.75;
 
@@ -224,6 +241,72 @@
 
     &:hover {
       opacity: 1;
+    }
+  }
+}
+
+.entity {
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+
+  .entity-unknown-shape {
+    width: 4rem;
+    height: 4rem;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: -6.5rem;
+      left: -6.5rem;
+      z-index: -1;
+      width: 250px;
+      height: 250px;
+      background: url("/mist-texture.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: inline-block;
+    }
+  }
+
+  .entity-shape {
+    width: 4rem;
+    height: 4rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.cube {
+      background-image: url("/cube.svg");
+    }
+
+    &.pyramid {
+      background-image: url("/pyramid.svg");
+    }
+
+    &.sphere {
+      background-image: url("/sphere.svg");
+    }
+
+    &.green {
+      filter: hue-rotate(90deg);
+    }
+
+    &.blue {
+      filter: hue-rotate(180deg);
+    }
+
+    &.pink {
+      filter: hue-rotate(270deg);
+    }
+
+    &.red {
+      filter: hue-rotate(310deg) saturate(3);
     }
   }
 }
