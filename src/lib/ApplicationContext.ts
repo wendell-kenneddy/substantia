@@ -76,7 +76,7 @@ export class ApplicationContext {
       this._UIManager.getComponentById("open-about-modal-button");
 
     openAboutModalButton.attachAction(
-      new Action("click", (e) => {
+      new Action("click", () => {
         const aboutModal: UIComponent = this._UIManager.getComponentById("about-modal");
         aboutModal.show();
       })
@@ -93,7 +93,7 @@ export class ApplicationContext {
     );
 
     closeAboutModalButton.attachAction(
-      new Action("click", (e) => {
+      new Action("click", () => {
         const aboutModal: UIComponent = this._UIManager.getComponentById("about-modal");
         aboutModal.hide();
       })
