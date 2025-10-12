@@ -4,6 +4,9 @@ export class ApplicationContext {
   private openHowToPlayModalButton: HTMLButtonElement = document.getElementById(
     "open-how-to-play-modal-button"
   ) as HTMLButtonElement;
+  private aboutModal: HTMLElement = document.getElementById("about") as HTMLElement;
+  private openAboutModalButton: HTMLButtonElement = document.getElementById("open-about-modal-button") as HTMLButtonElement;
+  private closeAboutModalButton: HTMLButtonElement = document.getElementById("close-about-modal-button") as HTMLButtonElement;
   private closeHowToPlayModalButton: HTMLButtonElement = document.getElementById(
     "close-how-to-play-modal-button"
   ) as HTMLButtonElement;
@@ -58,6 +61,14 @@ export class ApplicationContext {
 
     this.closeHowToPlayModalButton.addEventListener("click", () => {
       this.howToPlayModal.classList.add("hidden");
+    });
+
+    this.openAboutModalButton.addEventListener("click", () => {
+      this.aboutModal.classList.remove("hidden");
+    });
+
+    this.closeAboutModalButton.addEventListener("click", () => {
+      this.aboutModal.classList.add("hidden");
     });
 
     this.startGameButton.addEventListener("click", () => {

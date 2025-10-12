@@ -1,9 +1,4 @@
 #how-to-play {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   #how-to-play-container {
     border-radius: 2.5rem; // 40px
@@ -15,7 +10,7 @@
     border: 1px solid #fff8f04d;
     margin: 1rem; // 16px
 
-    #titulo {
+    #title {
       width: 100%;
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -83,7 +78,7 @@
         p {
           text-align: center;
           font-family: "Outfit";
-          font-size: 0.8rem; // 12.8px
+          font-size: 1rem; // 16px
         }
 
         img {
@@ -116,7 +111,7 @@
     .explicacoes-baixo-texto {
       text-align: center;
       font-family: "Outfit";
-      font-size: 0.7rem; // 11.2px
+      font-size: 1rem; // 16px
       margin: 0.5rem; // 8px
       margin-bottom: 0.1rem; // 1.6px
       display: flex;
