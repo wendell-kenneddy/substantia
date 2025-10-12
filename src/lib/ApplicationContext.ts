@@ -1,117 +1,222 @@
+import { Action } from "./Action";
+import { UIComponent } from "./UIComponent";
+import { UIManager } from "./UIManager";
+import { Utils } from "./Utils";
+
 export class ApplicationContext {
-  private mainMenuSection: HTMLElement = document.getElementById("main-menu") as HTMLElement;
-  private howToPlayModal: HTMLElement = document.getElementById("how-to-play") as HTMLElement;
-  private openHowToPlayModalButton: HTMLButtonElement = document.getElementById(
-    "open-how-to-play-modal-button"
-  ) as HTMLButtonElement;
-  private closeHowToPlayModalButton: HTMLButtonElement = document.getElementById(
-    "close-how-to-play-modal-button"
-  ) as HTMLButtonElement;
-  private gameUI: HTMLElement = document.getElementById("game-ui") as HTMLElement;
-  private startGameButton: HTMLButtonElement = document.getElementById(
-    "start-game-button"
-  ) as HTMLButtonElement;
-  private settingsMenu: HTMLElement = document.getElementById("settings-menu") as HTMLElement;
-  private openGameSettingsMenuButton: HTMLButtonElement = document.getElementById(
-    "open-game-settings-menu-button"
-  ) as HTMLButtonElement;
-  private goBackToMainMenuButton: HTMLButtonElement = document.getElementById(
-    "go-back-to-main-menu-button"
-  ) as HTMLButtonElement;
-  private openHowToPlayModalButtonInGame: HTMLButtonElement = document.getElementById(
-    "open-how-to-play-modal-button-in-game"
-  ) as HTMLButtonElement;
-  private playerBookModal: HTMLElement = document.getElementById(
-    "player-book-modal"
-  ) as HTMLElement;
-  private openPlayerBookModalButton: HTMLButtonElement = document.getElementById(
-    "open-player-book-modal-button"
-  ) as HTMLButtonElement;
-  private closePlayerBookModalButton: HTMLButtonElement = document.getElementById(
-    "close-player-book-modal-button"
-  ) as HTMLButtonElement;
-  private theoryModal: HTMLElement = document.getElementById(
-    "theory-modal-overlay"
-  ) as HTMLButtonElement;
-  private openTheoryModalButton: HTMLButtonElement = document.getElementById(
-    "open-theory-modal-button"
-  ) as HTMLButtonElement;
-  private closeTheoryModalButton: HTMLButtonElement = document.getElementById(
-    "close-theory-modal-button"
-  ) as HTMLButtonElement;
-  private validateTheoryButton: HTMLButtonElement = document.getElementById(
-    "validate-theory-button"
-  ) as HTMLButtonElement;
-  private mainMenuListenersSet: boolean = false;
-  private inGameListenersSet: boolean = false;
+  private _UIManager: UIManager = new UIManager();
 
   public run(): void {
-    this.addMainMenuListeners();
+    this.registerUIComponents();
+    this.attachUIComponentsActions();
   }
 
-  private addMainMenuListeners(): void {
-    if (this.mainMenuListenersSet) return;
-
-    this.openHowToPlayModalButton.addEventListener("click", () => {
-      this.howToPlayModal.classList.remove("hidden");
-    });
-
-    this.closeHowToPlayModalButton.addEventListener("click", () => {
-      this.howToPlayModal.classList.add("hidden");
-    });
-
-    this.startGameButton.addEventListener("click", () => {
-      this.mainMenuSection.classList.add("hidden");
-      this.gameUI.classList.remove("hidden");
-      this.addInGameListeners();
-    });
-
-    this.mainMenuListenersSet = true;
+  private registerUIComponents(): void {
+    this.registerHowToPlayModalUIComponent();
+    this.registerMainMenuUIComponent();
+    this.registerGameUIComponent();
+    this.registerProgressBarUIComponents();
+    this.registerSettingsMenuUIComponent();
+    this.registerOpenSettingsMenuButtonUIComponent();
+    this.registerPlayerBookModalUIComponent();
+    this.registerOpenPlayerBookModalButtonUIComponent();
+    this.registerOpenTheoryModalButtonUIComponent();
+    this.registerTheoryModalUIComponent();
   }
 
-  private addInGameListeners(): void {
-    if (this.inGameListenersSet) return;
-
-    this.openGameSettingsMenuButton.addEventListener("click", () => {
-      if (this.settingsMenu.classList.contains("hidden"))
-        this.settingsMenu.classList.remove("hidden");
-      else {
-        this.settingsMenu.classList.add("hidden");
-      }
-    });
-
-    this.openPlayerBookModalButton.addEventListener("click", () => {
-      this.playerBookModal.classList.remove("hidden");
-    });
-
-    this.closePlayerBookModalButton.addEventListener("click", () => {
-      this.playerBookModal.classList.add("hidden");
-    });
-
-    this.goBackToMainMenuButton.addEventListener("click", () => {
-      this.settingsMenu.classList.add("hidden");
-      this.gameUI.classList.add("hidden");
-      this.mainMenuSection.classList.remove("hidden");
-    });
-
-    this.openHowToPlayModalButtonInGame.addEventListener("click", () => {
-      this.howToPlayModal.classList.remove("hidden");
-    });
-
-    this.openTheoryModalButton.addEventListener("click", () => {
-      this.theoryModal.classList.remove("hidden");
-    });
-
-    this.closeTheoryModalButton.addEventListener("click", () => {
-      this.theoryModal.classList.add("hidden");
-    });
-
-    this.validateTheoryButton.addEventListener("click", this.validateTheory);
-
-    this.inGameListenersSet = true;
+  private attachUIComponentsActions(): void {
+    this.attachHowToPlayModalActions();
+    this.attachMainMenuActions();
+    this.attachSettingsMenuActions();
+    this.attachOpenSettingsMenuButtonActions();
+    this.attachPlayerBookModalActions();
+    this.attachOpenPlayerBookModalActions();
+    this.attachOpenTheoryModalButtonActions();
+    this.attachTheoryModalActions();
   }
 
-  private validateTheory(e: Event): void {
-    e.preventDefault();
+  private registerGameUIComponent() {
+    this._UIManager.registerComponent(new UIComponent("game-ui"));
+  }
+
+  private registerHowToPlayModalUIComponent(): void {
+    const howToPlayModal: UIComponent = new UIComponent("how-to-play-modal");
+    this._UIManager.registerComponent(howToPlayModal);
+  }
+
+  private attachHowToPlayModalActions() {
+    const howToPlayModal = this._UIManager.getComponentById("how-to-play-modal");
+
+    howToPlayModal.attachAction(
+      new Action("click", (e) => {
+        const target: EventTarget | null = e.target;
+        if (!target) return;
+        const HTMLElement: HTMLElement = target as HTMLElement;
+
+        if (HTMLElement.id == "close-how-to-play-modal-button") howToPlayModal.hide();
+      })
+    );
+  }
+
+  private registerMainMenuUIComponent(): void {
+    const mainMenu: UIComponent = new UIComponent("main-menu");
+    this._UIManager.registerComponent(mainMenu);
+  }
+
+  private attachMainMenuActions() {
+    const mainMenu: UIComponent = this._UIManager.getComponentById("main-menu");
+
+    mainMenu.attachAction(
+      new Action("click", (e) => {
+        const target: EventTarget | null = e.target;
+        if (!target) return;
+        const HTMLElement: HTMLElement = target as HTMLElement;
+
+        switch (HTMLElement.id) {
+          case "open-how-to-play-modal-button":
+            this._UIManager.getComponentById("how-to-play-modal").show();
+            break;
+          case "start-game-button":
+            const gameUI = this._UIManager.getComponentById("game-ui");
+            mainMenu.hide();
+            gameUI.show();
+            break;
+          default:
+            break;
+        }
+      })
+    );
+  }
+
+  private registerProgressBarUIComponents(): void {
+    const actionPointsProgressBar = new UIComponent("action-points-progress-bar");
+    const elapsedTimeProgressBar = new UIComponent("elapsed-time-progress-bar");
+    this._UIManager.registerComponent(actionPointsProgressBar);
+    this._UIManager.registerComponent(elapsedTimeProgressBar);
+  }
+
+  private registerSettingsMenuUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("settings-menu"));
+  }
+
+  private attachSettingsMenuActions(): void {
+    const settingsMenu: UIComponent = this._UIManager.getComponentById("settings-menu");
+
+    settingsMenu.attachAction(
+      new Action("click", (e) => {
+        const target: HTMLElement = Utils.getEventTarget(e);
+
+        switch (target.id) {
+          case "go-back-to-main-menu-button":
+            const mainMenu: UIComponent = this._UIManager.getComponentById("main-menu");
+            const gameUI: UIComponent = this._UIManager.getComponentById("game-ui");
+
+            settingsMenu.hide();
+            gameUI.hide();
+            mainMenu.show();
+            break;
+          case "open-how-to-play-modal-button-in-game":
+            this._UIManager.getComponentById("how-to-play-modal").show();
+            break;
+          default:
+            break;
+        }
+      })
+    );
+  }
+
+  private registerOpenSettingsMenuButtonUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("open-game-settings-menu-button"));
+  }
+
+  private attachOpenSettingsMenuButtonActions() {
+    const openGameSettingsMenuButton = this._UIManager.getComponentById(
+      "open-game-settings-menu-button"
+    );
+
+    openGameSettingsMenuButton.attachAction(
+      new Action("click", () => {
+        const settingsMenu = this._UIManager.getComponentById("settings-menu");
+        console.log("aaaaaa");
+        if (settingsMenu.isHidden) return settingsMenu.show();
+        settingsMenu.hide();
+      })
+    );
+  }
+
+  private registerPlayerBookModalUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("player-book-modal"));
+  }
+
+  private attachPlayerBookModalActions(): void {
+    const playerBookModal = new UIComponent("player-book-modal");
+
+    playerBookModal.attachAction(
+      new Action("click", (e) => {
+        const target: EventTarget | null = e.target;
+        if (!target) return;
+        const HTMLElement: HTMLElement = target as HTMLElement;
+
+        if (HTMLElement.id === "close-player-book-modal-button") playerBookModal.hide();
+      })
+    );
+  }
+
+  private registerOpenPlayerBookModalButtonUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("open-player-book-modal-button"));
+  }
+
+  private attachOpenPlayerBookModalActions(): void {
+    const openPlayerBookModalButton: UIComponent = this._UIManager.getComponentById(
+      "open-player-book-modal-button"
+    );
+
+    openPlayerBookModalButton.attachAction(
+      new Action("click", () => {
+        this._UIManager.getComponentById("player-book-modal").show();
+      })
+    );
+  }
+
+  private registerOpenTheoryModalButtonUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("open-theory-modal-button"));
+  }
+
+  private attachOpenTheoryModalButtonActions(): void {
+    const openTheoryModalButton: UIComponent = this._UIManager.getComponentById(
+      "open-theory-modal-button"
+    );
+
+    openTheoryModalButton.attachAction(
+      new Action("click", () => {
+        this._UIManager.getComponentById("theory-modal").show();
+      })
+    );
+  }
+
+  private registerTheoryModalUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("theory-modal"));
+  }
+
+  private attachTheoryModalActions(): void {
+    const theoryModal: UIComponent = this._UIManager.getComponentById("theory-modal");
+
+    theoryModal.attachAction(
+      new Action("click", (e) => {
+        const target: HTMLElement = Utils.getEventTarget(e);
+
+        switch (target.id) {
+          case "close-theory-modal-button":
+            console.log("test");
+            theoryModal.hide();
+            break;
+          case "validate-theory":
+            e.preventDefault();
+            break;
+          default:
+            break;
+        }
+      })
+    );
   }
 }
