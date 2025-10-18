@@ -14,7 +14,7 @@ export class UIManager {
 
   public getComponentById(id: string): UIComponent {
     const component: UIComponent | undefined = this.UIComponents.find((c) => c.id === id);
-    if (!component) throw new Error("Component not fouund.");
+    if (!component) throw new Error("Component not found.");
     return component;
   }
 }
