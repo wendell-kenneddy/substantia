@@ -2,6 +2,7 @@ import { Action } from "./Action";
 import { UIComponent } from "./UIComponent";
 import { UIManager } from "./UIManager";
 import { Utils } from "./Utils";
+import { Shape } from "./Shape"
 
 export class ApplicationContext {
   private _UIManager: UIManager = new UIManager();
@@ -25,6 +26,7 @@ export class ApplicationContext {
     this.registerOpenPlayerBookModalButtonUIComponent();
     this.registerOpenTheoryModalButtonUIComponent();
     this.registerTheoryModalUIComponent();
+    this.spawnShapesInGridComponent(8);
   }
 
   private attachUIComponentsActions(): void {
@@ -260,5 +262,47 @@ export class ApplicationContext {
         }
       })
     );
+  }
+
+  private spawnShapesInGridComponent(count: number): void {
+
+    function randomColor(): string {
+      const colors: string[] = ["red", "blue", "green"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function randomImageURL(): string {
+      const urls: string[] = [
+        "/cube.svg",
+        "/pyramid.svg",
+        "/sphere.svg",
+      ];
+      return urls[Math.floor(Math.random() * urls.length)];
+    }
+
+    const container: HTMLElement = document.getElementById("game-ui-playable-area") as HTMLElement;
+
+    if (!container) throw new Error("Container not found.");
+  
+    const cols: number = 10;
+    const rows: number = 6;
+    const usedCells: Set<string> = new Set();
+
+    for (let i = 0; i < count; i++) {
+      let col: number, row: number;
+      let tries: number = 0;
+
+      do {
+        col = Math.floor(Math.random() * cols) + 1; 
+        row = Math.floor(Math.random() * rows) + 1;
+        tries++;
+      } while (usedCells.has(`${col},${row}`) && tries < 100);
+
+      usedCells.add(`${col},${row}`);
+
+      const shape: Shape = new Shape(randomColor(), randomImageURL(), 60);
+      shape.setGridPosition(col, row);
+      container.appendChild(shape.element);
+    }
   }
 }

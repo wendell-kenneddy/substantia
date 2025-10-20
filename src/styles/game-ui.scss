@@ -75,9 +75,13 @@
 }
 
 #game-ui-playable-area {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   width: 100%;
   height: 659px;
   border-radius: 0 0 3.125rem 3.125rem; // 0 0 50px 50px
+
 }
 
 #open-game-settings-menu-button {
