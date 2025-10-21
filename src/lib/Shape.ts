@@ -1,5 +1,3 @@
-import "../styles/game-ui.scss"
-
 export class Shape {
 
   public element: HTMLElement;

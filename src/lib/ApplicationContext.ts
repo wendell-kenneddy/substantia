@@ -27,7 +27,6 @@ export class ApplicationContext {
     this.registerOpenTheoryModalButtonUIComponent();
     this.registerTheoryModalUIComponent();
     this.spawnShapesInGridComponent(8);
-    this.RegisterShapesInGridComponent()
   }
 
   private attachUIComponentsActions(): void {
@@ -308,21 +307,5 @@ export class ApplicationContext {
       shape.setGridPosition(col, row);
       container.appendChild(shape.element);
     }
-  }
-
-  private RegisterShapesInGridComponent(): void {
-    this._UIManager.registerComponent(new UIComponent("entity"));
-
-  }
-
-  private ShapesInGridComponentActions(): void {
-    const entity: UIComponent = this._UIManager.getComponentById("entity");
-
-    entity.attachAction(
-      new Action("click", (e) => {
-        const target: HTMLElement = Utils.getEventTarget(e);
-
-      })
-    );
   }
 }
