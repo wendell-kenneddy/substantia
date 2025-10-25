@@ -4,4 +4,8 @@ export class Utils {
     if (!target) throw new Error("No target identified.");
     return target as HTMLElement;
   }
+
+  public static getRandomInteger(max: number): number {
+    return Math.floor(Math.random() * (max + 1));
+  }
 }
