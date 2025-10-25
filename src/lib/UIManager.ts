@@ -1,7 +1,7 @@
 import type { UIComponent } from "./UIComponent";
 
 export class UIManager {
-  private readonly UIComponents: UIComponent[] = [];
+  private UIComponents: UIComponent[] = [];
 
   constructor() {}
 
@@ -12,9 +12,17 @@ export class UIManager {
     this.UIComponents.push(component);
   }
 
+  public unregisterComponent(component: UIComponent): void {
+    this.UIComponents = this.UIComponents.filter((c) => c.id != component.id);
+  }
+
   public getComponentById(id: string): UIComponent {
     const component: UIComponent | undefined = this.UIComponents.find((c) => c.id === id);
     if (!component) throw new Error("Component not found.");
     return component;
+  }
+
+  public getAllComponents(): UIComponent[] {
+    return this.UIComponents;
   }
 }
