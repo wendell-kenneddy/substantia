@@ -2,10 +2,13 @@ import { Action } from "./Action";
 import { UIComponent } from "./UIComponent";
 import { UIManager } from "./UIManager";
 import { Utils } from "./Utils";
-import { Shape } from "./Shape"
+import { GameManager } from "./GameManager";
+import { ProgressBar } from "./ProgressBar";
+import { config } from "./config";
 
 export class ApplicationContext {
   private _UIManager: UIManager = new UIManager();
+  private gameManager: GameManager = new GameManager(this._UIManager);
 
   public run(): void {
     this.registerUIComponents();
@@ -26,7 +29,9 @@ export class ApplicationContext {
     this.registerOpenPlayerBookModalButtonUIComponent();
     this.registerOpenTheoryModalButtonUIComponent();
     this.registerTheoryModalUIComponent();
-    this.spawnShapesInGridComponent(8);
+    this.registerPlayableAreaUIComponent();
+    this.registerActionPointsCounterUIComponent();
+    this.registerElapsedTimeCounterUIComponent();
   }
 
   private attachUIComponentsActions(): void {
@@ -121,9 +126,7 @@ export class ApplicationContext {
             this._UIManager.getComponentById("how-to-play-modal").show();
             break;
           case "start-game-button":
-            const gameUI = this._UIManager.getComponentById("game-ui");
-            mainMenu.hide();
-            gameUI.show();
+            this.gameManager.start();
             break;
           default:
             break;
@@ -133,10 +136,26 @@ export class ApplicationContext {
   }
 
   private registerProgressBarUIComponents(): void {
-    const actionPointsProgressBar = new UIComponent("action-points-progress-bar");
-    const elapsedTimeProgressBar = new UIComponent("elapsed-time-progress-bar");
+    const actionPointsProgressBar = new ProgressBar(
+      "action-points-progress-bar",
+      config.MAX_ACTION_POINTS,
+      config.MAX_ACTION_POINTS
+    );
+    const elapsedTimeProgressBar = new ProgressBar(
+      "elapsed-time-progress-bar",
+      config.MAX_ACTION_POINTS * config.ELAPSED_TIME_PER_ACTION_POINT_CONSUMED,
+      0
+    );
     this._UIManager.registerComponent(actionPointsProgressBar);
     this._UIManager.registerComponent(elapsedTimeProgressBar);
+  }
+
+  private registerActionPointsCounterUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("action-points-counter"));
+  }
+
+  private registerElapsedTimeCounterUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("elapsed-time-counter"));
   }
 
   private registerSettingsMenuUIComponent(): void {
@@ -152,12 +171,7 @@ export class ApplicationContext {
 
         switch (target.id) {
           case "go-back-to-main-menu-button":
-            const mainMenu: UIComponent = this._UIManager.getComponentById("main-menu");
-            const gameUI: UIComponent = this._UIManager.getComponentById("game-ui");
-
-            settingsMenu.hide();
-            gameUI.hide();
-            mainMenu.show();
+            this.gameManager.stop();
             break;
           case "open-how-to-play-modal-button-in-game":
             this._UIManager.getComponentById("how-to-play-modal").show();
@@ -251,7 +265,6 @@ export class ApplicationContext {
 
         switch (target.id) {
           case "close-theory-modal-button":
-            console.log("test");
             theoryModal.hide();
             break;
           case "validate-theory":
@@ -264,45 +277,7 @@ export class ApplicationContext {
     );
   }
 
-  private spawnShapesInGridComponent(count: number): void {
-
-    function randomColor(): string {
-      const colors: string[] = ["red", "blue", "green"];
-      return colors[Math.floor(Math.random() * colors.length)];
-    }
-
-    function randomImageURL(): string {
-      const urls: string[] = [
-        "/cube.svg",
-        "/pyramid.svg",
-        "/sphere.svg",
-      ];
-      return urls[Math.floor(Math.random() * urls.length)];
-    }
-
-    const container: HTMLElement = document.getElementById("game-ui-playable-area") as HTMLElement;
-
-    if (!container) throw new Error("Container not found.");
-  
-    const cols: number = 10;
-    const rows: number = 6;
-    const usedCells: Set<string> = new Set();
-
-    for (let i = 0; i < count; i++) {
-      let col: number, row: number;
-      let tries: number = 0;
-
-      do {
-        col = Math.floor(Math.random() * cols) + 1; 
-        row = Math.floor(Math.random() * rows) + 1;
-        tries++;
-      } while (usedCells.has(`${col},${row}`) && tries < 100);
-
-      usedCells.add(`${col},${row}`);
-
-      const shape: Shape = new Shape(randomColor(), randomImageURL(), 60);
-      shape.setGridPosition(col, row);
-      container.appendChild(shape.element);
-    }
+  private registerPlayableAreaUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("game-ui-playable-area"));
   }
 }
