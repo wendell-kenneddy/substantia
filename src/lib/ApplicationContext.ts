@@ -271,11 +271,11 @@ export class ApplicationContext {
       return colors[Math.floor(Math.random() * colors.length)];
     }
 
-    function randomImageURL(): string {
+    function randomGeometry(): string {
       const urls: string[] = [
-        "/cube.svg",
-        "/pyramid.svg",
-        "/sphere.svg",
+        "cube",
+        "pyramid",
+        "sphere",
       ];
       return urls[Math.floor(Math.random() * urls.length)];
     }
@@ -300,7 +300,10 @@ export class ApplicationContext {
 
       usedCells.add(`${col},${row}`);
 
-      const shape: Shape = new Shape(randomColor(), randomImageURL(), 60);
+      const shape: Shape = new Shape();
+
+      shape.setGeometry(randomGeometry())
+      shape.setColor(randomColor());
       shape.setGridPosition(col, row);
       container.appendChild(shape.element);
     }
