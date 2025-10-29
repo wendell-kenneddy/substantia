@@ -1,7 +1,12 @@
+import type { AbstractHypothesis, HypothesisValidationResult } from "./AbstractHypothesis";
 import { Action } from "./Action";
 import { config, type EntityColor, type EntityShape } from "./config";
 import { Entity } from "./Entity";
+import { HypothesesUIComponent } from "./HypothesesUIComponent";
 import type { ProgressBar } from "./ProgressBar";
+import { ShapeCanNeverBeOfChosenColorHipothesis } from "./ShapeCanNeverBeOfChosenColorHipothesis";
+import { ShapeIsMostlyOfChosenColorHipothesis } from "./ShapeIsMostlyOfChosenColorHipothesis";
+import { ShapeIsRarelyOfChosenColorHipothesis } from "./ShapeIsRarelyOfChosenColorHipothesis";
 import { UIComponent } from "./UIComponent";
 import type { UIManager } from "./UIManager";
 import { Utils } from "./Utils";
@@ -12,6 +17,11 @@ export class GameManager {
   private currentActionPoints: number = config.MAX_ACTION_POINTS;
   private allowedShapes: EntityShape[] = [];
   private allowedColorsPerShape: Record<string, EntityColor[]> = {};
+  private allowedHypotheses: AbstractHypothesis[] = [
+    new ShapeCanNeverBeOfChosenColorHipothesis(),
+    new ShapeIsMostlyOfChosenColorHipothesis(),
+    new ShapeIsRarelyOfChosenColorHipothesis()
+  ];
 
   constructor(uiManager: UIManager) {
     this.uiManager = uiManager;
@@ -31,6 +41,7 @@ export class GameManager {
     this.updateElapsedTimeProgressBar();
     this.updateElapsedTimeCounter();
     this.spawnEntities();
+    this.appendHypothesisInputs();
     gameUI.show();
 
     this.isRunning = true;
@@ -50,6 +61,48 @@ export class GameManager {
     mainMenu.show();
 
     this.isRunning = false;
+  }
+
+  public validateTheory(e: Event): void {
+    if (!(e instanceof SubmitEvent)) return;
+    e.preventDefault();
+
+    const formData: FormData = new FormData(e.target as HTMLFormElement, e.submitter);
+    const formDataArray: [string, FormDataEntryValue][] = Array.from(formData);
+    let score: number = 0;
+
+    this.allowedShapes.forEach((s) => {
+      const playerHypothesis = formDataArray.reduce<{
+        title?: FormDataEntryValue;
+        color?: EntityColor;
+      }>((prev, curr) => {
+        if (curr[0] == `${s}-hypothesis`) {
+          prev["title"] = curr[1];
+        } else if (curr[0] == `${s}-hypothesis-color-target`) {
+          prev["color"] = curr[1] as EntityColor;
+        }
+
+        return prev;
+      }, {});
+
+      const validator: AbstractHypothesis = this.allowedHypotheses.find(
+        (h) => h.id === playerHypothesis.title
+      ) as AbstractHypothesis;
+      const result: HypothesisValidationResult = validator.validate(
+        this.uiManager.getAllComponents(),
+        s,
+        playerHypothesis.color as EntityColor
+      );
+
+      result.correct && score++;
+      console.log(result.message);
+    });
+
+    console.log(
+      `Resultado: ${score}/${this.allowedShapes.length}: ${
+        score === this.allowedShapes.length ? "Vitória!" : "Derrota..."
+      }`
+    );
   }
 
   private resetGameState(): void {
@@ -83,6 +136,21 @@ export class GameManager {
       this.allowedShapes.push(shapeOptions[randomInteger]);
       shapeOptions.splice(randomInteger, 1);
     }
+  }
+
+  private appendHypothesisInputs(): void {
+    const container: UIComponent = this.uiManager.getComponentById(
+      "theory-form-hypotheses-container"
+    );
+
+    this.allowedShapes.forEach((s) => {
+      const component = new HypothesesUIComponent(`${s}-hypotheses-component`, s);
+
+      this.allowedHypotheses.forEach((h) => component.addHypothesis(h));
+      component.build();
+      this.uiManager.registerComponent(component);
+      component.appendSelf(container);
+    });
   }
 
   private spawnEntities(): void {
@@ -130,7 +198,7 @@ export class GameManager {
 
   private destroyEntities(): void {
     this.uiManager.getAllComponents().forEach((c) => {
-      if (c instanceof Entity) {
+      if (c instanceof Entity || c instanceof HypothesesUIComponent) {
         c.destroy();
         this.uiManager.unregisterComponent(c);
       }
@@ -156,12 +224,14 @@ export class GameManager {
   private updateActionsPointsCounter(): void {
     const actionPointsCounter: UIComponent =
       this.uiManager.getComponentById("action-points-counter");
-    actionPointsCounter.updateText(`${this.currentActionPoints}/${config.MAX_ACTION_POINTS}`);
+    actionPointsCounter.updateDisplayValue(
+      `${this.currentActionPoints}/${config.MAX_ACTION_POINTS}`
+    );
   }
 
   private updateElapsedTimeCounter(): void {
     const elapsedTimeCounter: UIComponent = this.uiManager.getComponentById("elapsed-time-counter");
-    elapsedTimeCounter.updateText(
+    elapsedTimeCounter.updateDisplayValue(
       `${
         config.ELAPSED_TIME_PER_ACTION_POINT_CONSUMED *
         (config.MAX_ACTION_POINTS - this.currentActionPoints)
