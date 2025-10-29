@@ -8,4 +8,8 @@ export class Utils {
   public static getRandomInteger(max: number): number {
     return Math.floor(Math.random() * (max + 1));
   }
+
+  public static capitalize(text: string): string {
+    return `${text[0].toUpperCase()}${text.slice(1)}`;
+  }
 }
