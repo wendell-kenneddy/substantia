@@ -1,7 +1,7 @@
+import { AbstractUIComponent } from "./AbstractUIComponent";
 import type { EntityColor, EntityShape } from "./config";
-import { UIComponent } from "./UIComponent";
 
-export class Entity extends UIComponent {
+export class Entity extends AbstractUIComponent {
   private _revealed: boolean = false;
   private _color: EntityColor;
   private _shape: EntityShape;
@@ -17,8 +17,18 @@ export class Entity extends UIComponent {
     this.addUnknownEntityStyles();
   }
 
+  public updateDisplayValue(): void {}
+
   public get revealed(): boolean {
     return this._revealed;
+  }
+
+  public get shape(): EntityShape {
+    return this._shape;
+  }
+
+  public get color(): EntityColor {
+    return this._color;
   }
 
   public reveal(): void {
