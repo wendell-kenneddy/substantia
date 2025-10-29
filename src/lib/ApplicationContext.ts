@@ -1,10 +1,11 @@
 import { Action } from "./Action";
-import { UIComponent } from "./UIComponent";
 import { UIManager } from "./UIManager";
 import { Utils } from "./Utils";
 import { GameManager } from "./GameManager";
 import { ProgressBar } from "./ProgressBar";
 import { config } from "./config";
+import type { AbstractUIComponent } from "./AbstractUIComponent";
+import { UIComponent } from "./UIComponent";
 
 export class ApplicationContext {
   private _UIManager: UIManager = new UIManager();
@@ -32,6 +33,9 @@ export class ApplicationContext {
     this.registerPlayableAreaUIComponent();
     this.registerActionPointsCounterUIComponent();
     this.registerElapsedTimeCounterUIComponent();
+    this.registerHypothesesContainerUIComponent();
+    this.registerCloseTheoryModalUIComponent();
+    this.registerTheoryFormUIComponent();
   }
 
   private attachUIComponentsActions(): void {
@@ -44,7 +48,12 @@ export class ApplicationContext {
     this.attachPlayerBookModalActions();
     this.attachOpenPlayerBookModalActions();
     this.attachOpenTheoryModalButtonActions();
-    this.attachTheoryModalActions();
+    this.attachCloseTheoryModalButtonActions();
+    this.attachTheoryFormActions();
+  }
+
+  private registerHypothesesContainerUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("theory-form-hypotheses-container"));
   }
 
   private registerGameUIComponent() {
@@ -256,28 +265,32 @@ export class ApplicationContext {
     this._UIManager.registerComponent(new UIComponent("theory-modal"));
   }
 
-  private attachTheoryModalActions(): void {
-    const theoryModal: UIComponent = this._UIManager.getComponentById("theory-modal");
+  private registerCloseTheoryModalUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("close-theory-modal-button"));
+  }
 
-    theoryModal.attachAction(
-      new Action("click", (e) => {
-        const target: HTMLElement = Utils.getEventTarget(e);
-
-        switch (target.id) {
-          case "close-theory-modal-button":
-            theoryModal.hide();
-            break;
-          case "validate-theory":
-            e.preventDefault();
-            break;
-          default:
-            break;
-        }
+  private attachCloseTheoryModalButtonActions(): void {
+    const button: AbstractUIComponent = this._UIManager.getComponentById(
+      "close-theory-modal-button"
+    );
+    button.attachAction(
+      new Action("click", () => {
+        const theoryModal: UIComponent = this._UIManager.getComponentById("theory-modal");
+        theoryModal.hide();
       })
     );
   }
 
   private registerPlayableAreaUIComponent(): void {
     this._UIManager.registerComponent(new UIComponent("game-ui-playable-area"));
+  }
+
+  private registerTheoryFormUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("theory-form"));
+  }
+
+  private attachTheoryFormActions(): void {
+    const theoryForm: AbstractUIComponent = this._UIManager.getComponentById("theory-form");
+    theoryForm.attachAction(new Action("submit", (e) => this.gameManager.validateTheory(e)));
   }
 }
