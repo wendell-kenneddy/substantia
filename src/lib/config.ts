@@ -21,14 +21,12 @@ export type Informations = {
   colors: {
     [colorName: string]: number;
   };
-
-}
+};
 
 export type ShapeContainers = {
   shape: string;
   container: HTMLElement;
-
-}
+};
 
 export const config = {
   MAX_ACTION_POINTS: 15,
