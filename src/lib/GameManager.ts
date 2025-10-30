@@ -183,10 +183,10 @@ export class GameManager {
       entity.appendSelf(playableArea);
       entity.attachAction(
         new Action("click", () => {
-          this.revealEntity(entity);
           if (this.currentActionPoints > 0) {
             this.shapesInformations(entity);
           }
+          this.revealEntity(entity);
         })
       );
       availableCells.splice(randomGridPositionIndex, 1);
