@@ -30,8 +30,6 @@ export class GameManager {
     this.uiManager = uiManager;
     this.left_page = new Page("left-page");
     this.right_page = new Page("right-page");
-    this.uiManager.registerComponent(this.left_page);
-    this.uiManager.registerComponent(this.right_page);
   }
 
   public start(): void {
