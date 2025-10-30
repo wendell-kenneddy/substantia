@@ -138,17 +138,109 @@
   height: 804px;
   background: url("/book.png");
   z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+  #shapes-informations {
+    height: 70%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 1.1rem; //17.6px
+    font-size: 1.3rem; //20.8px
+
+    #left-page {
+      width: 16rem; //256px
+      height: 75%;
+      display: flex;
+      margin-right: 3rem; //48px
+      flex-direction: column;
+      padding: 1rem; //16px
+      align-items: center;
+      
+  
+    }
+  
+    #right-page {
+      width: 16rem; //256px
+      height: 75%;
+      display: flex;
+      margin-left: 3rem; //48px
+      flex-direction: column;
+      padding: 1rem; //16px
+      align-items: center;
+  
+    }
+
+    .informations-right {
+      display: flex;
+      flex-direction: column;
+      height: 50%;
+      margin: 0.5rem auto; //8px auto
+      font-family: 'mansalva';
+      align-items: center;
+      transform: rotate(-4deg);
+      align-items: flex-end;
+    
+    }
+
+    .informations-left {
+      display: flex;
+      flex-direction: column;
+      height: 50%;
+      margin: 0.5rem auto; //8px auto
+      font-family: 'mansalva';
+      align-items: flex-start;
+      transform: rotate(4deg);
+
+    }
+
+    .title {
+      color: #070207;
+      font-size: 2rem; //32px
+
+    }
+
+    .yellow {
+      color: #AD7500;
+    }
+
+    .pink {
+      color: #A836AA;
+    }
+
+    .blue {
+      color: #066777;
+    }
+
+    .red {
+      color: #C33A3F;
+    }
+
+    .green {
+      color: #045731;
+    }
+
+    .p-color {
+      font-size: 1.5rem; //24px
+    }
+
+
+  }
 
   #close-player-book-modal-button {
     background: transparent url("/x.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.5rem; //40px
+    height: 2.5rem; //40px
     position: absolute;
     top: 0;
-    right: -2rem;
+    right: -2rem; //-32px
     border: none;
     opacity: 0.75;
 

@@ -231,6 +231,7 @@ export class ApplicationContext {
 
   private registerOpenPlayerBookModalButtonUIComponent(): void {
     this._UIManager.registerComponent(new UIComponent("open-player-book-modal-button"));
+
   }
 
   private attachOpenPlayerBookModalActions(): void {

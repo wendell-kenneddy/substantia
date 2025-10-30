@@ -69,4 +69,5 @@ export abstract class AbstractUIComponent {
       this.HTMLElement?.removeEventListener(o, (e) => this.runActions(e))
     );
   }
+
 }
