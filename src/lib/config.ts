@@ -16,6 +16,17 @@ export const ENTITY_SHAPE_TRANSLATIONS: Record<EntityShape, string> = {
   pyramid: "pirâmide",
   sphere: "esfera"
 };
+export type Informations = {
+  shape: string;
+  colors: {
+    [colorName: string]: number;
+  };
+};
+
+export type ShapeContainers = {
+  shape: string;
+  container: HTMLElement;
+};
 
 export const config = {
   MAX_ACTION_POINTS: 15,
