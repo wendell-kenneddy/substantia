@@ -1,6 +1,8 @@
 import { AbstractUIComponent } from "./AbstractUIComponent";
 import { type Informations } from "./config";
 import { type ShapeContainers } from "./config";
+import { ENTITY_SHAPE_TRANSLATIONS } from "./config";
+import { ENTITY_COLOR_TRANSLATIONS } from "./config";
 
 export class Page extends AbstractUIComponent {
   private _informations: Informations[] = [];
@@ -16,7 +18,7 @@ export class Page extends AbstractUIComponent {
     container.classList.add(container_class);
     const title: HTMLElement = document.createElement("h2");
     title.classList.add("title");
-    title.innerText = shape;
+    title.innerText = ENTITY_SHAPE_TRANSLATIONS[shape as "cube" | "pyramid" | "sphere"];
     container.append(title);
     const informations = { shape: shape, colors: { [color]: 1 } };
     this._informations.push(informations);
@@ -38,8 +40,8 @@ export class Page extends AbstractUIComponent {
               let exist = false;
               if (c.container.querySelectorAll("p").length > 0) {
                 c.container.querySelectorAll("p").forEach((d) => {
-                  if (d.textContent.includes(color)) {
-                    d.innerText = `${value} ${color}`;
+                  if ((d.textContent ?? "").includes(ENTITY_COLOR_TRANSLATIONS[color as "red" | "green" | "blue" | "pink" | "yellow"])) {
+                    d.innerText = `${value} ${ENTITY_COLOR_TRANSLATIONS[color as "red" | "green" | "blue" | "pink" | "yellow"]}`;
                     exist = true;
                   }
                 });
@@ -49,7 +51,7 @@ export class Page extends AbstractUIComponent {
                 const colorP: HTMLElement = document.createElement("p");
                 colorP.classList.add(color);
                 colorP.classList.add("p-color");
-                colorP.innerText = `${value} ${color}`;
+                colorP.innerText = `${value} ${ENTITY_COLOR_TRANSLATIONS[color as "red" | "green" | "blue" | "pink" | "yellow"]}`;
                 c.container.appendChild(colorP);
               }
             });
