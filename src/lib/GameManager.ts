@@ -181,7 +181,7 @@ export class GameManager {
       entity.appendSelf(playableArea);
       entity.attachAction(
         new Action("click", () => {
-          if (this.currentActionPoints > 0) {
+          if (this.currentActionPoints > 0 && entity.revealed === false) {
             this.shapesInformations(entity);
           }
           this.revealEntity(entity);
