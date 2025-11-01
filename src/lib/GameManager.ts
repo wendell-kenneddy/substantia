@@ -27,6 +27,8 @@ export class GameManager {
   ];
   private left_page: Page;
   private right_page: Page;
+  private elapsedTime: number = 0;
+  private elapsedTimeCouunter: number | null = null;
 
   constructor(uiManager: UIManager) {
     this.uiManager = uiManager;
@@ -45,10 +47,10 @@ export class GameManager {
     this.pickAllowedColorsPerShape();
     this.updateActionPointsProgressBar();
     this.updateActionsPointsCounter();
-    this.updateElapsedTimeProgressBar();
     this.updateElapsedTimeCounter();
     this.spawnEntities();
     this.appendHypothesisInputs();
+    this.startCountingElapsedTime();
     gameUI.show();
 
     this.isRunning = true;
@@ -56,6 +58,7 @@ export class GameManager {
 
   public stop(): void {
     if (!this.isRunning) return;
+    this.stopCountingElapsedTime();
 
     const settingsMenu: UIComponent = this.uiManager.getComponentById("settings-menu");
     const mainMenu: UIComponent = this.uiManager.getComponentById("main-menu");
@@ -67,9 +70,22 @@ export class GameManager {
     this.resetGameState();
     this.destroyEntities();
     this.destroyShapesInformations();
+    this.stopCountingElapsedTime();
     mainMenu.show();
 
     this.isRunning = false;
+  }
+
+  private startCountingElapsedTime(): void {
+    this.elapsedTimeCouunter = window.setInterval(() => {
+      this.elapsedTime++;
+      this.updateElapsedTimeCounter();
+    }, 1000);
+  }
+
+  private stopCountingElapsedTime(): void {
+    this.elapsedTimeCouunter && clearInterval(this.elapsedTimeCouunter);
+    this.elapsedTime = 0;
   }
 
   private hideResultsModal(): void {
@@ -79,6 +95,7 @@ export class GameManager {
 
   private restartGame(): void {
     if (!this.isRunning) return;
+    this.stopCountingElapsedTime();
     this.hideResultsModal();
     this.resetGameState();
     this.destroyEntities();
@@ -87,8 +104,8 @@ export class GameManager {
     this.spawnEntities();
     this.appendHypothesisInputs();
     this.updateElapsedTimeCounter();
-    this.updateElapsedTimeProgressBar();
     this.destroyShapesInformations();
+    this.startCountingElapsedTime();
   }
 
   public validateTheory(e: Event): void {
@@ -235,7 +252,6 @@ export class GameManager {
     this.currentActionPoints--;
     this.updateActionPointsProgressBar();
     this.updateActionsPointsCounter();
-    this.updateElapsedTimeProgressBar();
     this.updateElapsedTimeCounter();
     entity.reveal();
   }
@@ -256,15 +272,6 @@ export class GameManager {
     actionPointsProgressBar.currentValue = this.currentActionPoints;
   }
 
-  private updateElapsedTimeProgressBar(): void {
-    const elapsedTimeProgressBar: ProgressBar = this.uiManager.getComponentById(
-      "elapsed-time-progress-bar"
-    ) as ProgressBar;
-    elapsedTimeProgressBar.currentValue =
-      (config.MAX_ACTION_POINTS - this.currentActionPoints) *
-      config.ELAPSED_TIME_PER_ACTION_POINT_CONSUMED;
-  }
-
   private updateActionsPointsCounter(): void {
     const actionPointsCounter: UIComponent =
       this.uiManager.getComponentById("action-points-counter");
@@ -275,12 +282,15 @@ export class GameManager {
 
   private updateElapsedTimeCounter(): void {
     const elapsedTimeCounter: UIComponent = this.uiManager.getComponentById("elapsed-time-counter");
-    elapsedTimeCounter.updateDisplayValue(
-      `${
-        config.ELAPSED_TIME_PER_ACTION_POINT_CONSUMED *
-        (config.MAX_ACTION_POINTS - this.currentActionPoints)
-      } ano(s)`
-    );
+    const hours: string = Math.floor(this.elapsedTime / 3600)
+      .toString()
+      .toString()
+      .padStart(2, "0");
+    const minutes: string = Math.floor((this.elapsedTime % 3600) / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds: string = (this.elapsedTime % 60).toString().padStart(2, "0");
+    elapsedTimeCounter.updateDisplayValue(`${hours}:${minutes}:${seconds}`);
   }
 
   private getRandomEntityColorIndex() {
