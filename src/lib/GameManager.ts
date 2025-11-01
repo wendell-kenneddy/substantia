@@ -12,6 +12,7 @@ import { ShapeIsRarelyOfChosenColorHipothesis } from "./ShapeIsRarelyOfChosenCol
 import { UIComponent } from "./UIComponent";
 import type { UIManager } from "./UIManager";
 import { Utils } from "./Utils";
+import { Page } from "./Page";
 
 export class GameManager {
   private isRunning: boolean = false;
@@ -24,9 +25,13 @@ export class GameManager {
     new ShapeIsMostlyOfChosenColorHipothesis(),
     new ShapeIsRarelyOfChosenColorHipothesis()
   ];
+  private left_page: Page;
+  private right_page: Page;
 
   constructor(uiManager: UIManager) {
     this.uiManager = uiManager;
+    this.left_page = new Page("left-page");
+    this.right_page = new Page("right-page");
   }
 
   public start(): void {
@@ -61,6 +66,7 @@ export class GameManager {
     this.hideResultsModal();
     this.resetGameState();
     this.destroyEntities();
+    this.destroyShapesInformations();
     mainMenu.show();
 
     this.isRunning = false;
@@ -209,6 +215,9 @@ export class GameManager {
       entity.appendSelf(playableArea);
       entity.attachAction(
         new Action("click", () => {
+          if (this.currentActionPoints > 0 && entity.revealed === false) {
+            this.shapesInformations(entity);
+          }
           this.revealEntity(entity);
         })
       );
@@ -279,5 +288,26 @@ export class GameManager {
 
   private getRandomEntityShapeIndex() {
     return Utils.getRandomInteger(this.allowedShapes.length - 1);
+  }
+
+  public shapesInformations(c: Entity): void {
+    if (this.left_page.childQuantity() < 2 || this.left_page.verifyContainer(c.shape)) {
+      if (!this.left_page.verifyContainer(c.shape)) {
+        this.left_page.createShapeContainer("informations-left", c.shape, c.color);
+      } else {
+        this.left_page.addColorCount(c.shape, c.color);
+      }
+    } else {
+      if (!this.right_page.verifyContainer(c.shape)) {
+        this.right_page.createShapeContainer("informations-right", c.shape, c.color);
+      } else {
+        this.right_page.addColorCount(c.shape, c.color);
+      }
+    }
+  }
+
+  public destroyShapesInformations(): void {
+    this.left_page.reset();
+    this.right_page.reset();
   }
 }

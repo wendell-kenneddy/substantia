@@ -209,7 +209,6 @@ export class ApplicationContext {
     openGameSettingsMenuButton.attachAction(
       new Action("click", () => {
         const settingsMenu = this._UIManager.getComponentById("settings-menu");
-        console.log("aaaaaa");
         if (settingsMenu.isHidden) return settingsMenu.show();
         settingsMenu.hide();
       })
