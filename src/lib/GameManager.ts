@@ -88,6 +88,7 @@ export class GameManager {
     this.appendHypothesisInputs();
     this.updateElapsedTimeCounter();
     this.updateElapsedTimeProgressBar();
+    this.destroyShapesInformations();
   }
 
   public validateTheory(e: Event): void {
