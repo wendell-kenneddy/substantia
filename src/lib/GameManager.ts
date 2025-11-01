@@ -1,9 +1,11 @@
 import type { AbstractHypothesis, HypothesisValidationResult } from "./AbstractHypothesis";
+import type { AbstractUIComponent } from "./AbstractUIComponent";
 import { Action } from "./Action";
 import { config, type EntityColor, type EntityShape } from "./config";
 import { Entity } from "./Entity";
 import { HypothesesUIComponent } from "./HypothesesUIComponent";
 import type { ProgressBar } from "./ProgressBar";
+import { ResultsScreen } from "./ResultsScreen";
 import { ShapeCanNeverBeOfChosenColorHipothesis } from "./ShapeCanNeverBeOfChosenColorHipothesis";
 import { ShapeIsMostlyOfChosenColorHipothesis } from "./ShapeIsMostlyOfChosenColorHipothesis";
 import { ShapeIsRarelyOfChosenColorHipothesis } from "./ShapeIsRarelyOfChosenColorHipothesis";
@@ -56,6 +58,7 @@ export class GameManager {
 
     settingsMenu.hide();
     gameUI.hide();
+    this.hideResultsModal();
     this.resetGameState();
     this.destroyEntities();
     mainMenu.show();
@@ -63,13 +66,50 @@ export class GameManager {
     this.isRunning = false;
   }
 
+  private hideResultsModal(): void {
+    const resultsModal: UIComponent = this.uiManager.getComponentById("results-modal");
+    resultsModal.hide();
+  }
+
+  private restartGame(): void {
+    if (!this.isRunning) return;
+    this.hideResultsModal();
+    this.resetGameState();
+    this.destroyEntities();
+    this.pickAllowedShapes();
+    this.pickAllowedColorsPerShape();
+    this.spawnEntities();
+    this.appendHypothesisInputs();
+    this.updateElapsedTimeCounter();
+    this.updateElapsedTimeProgressBar();
+  }
+
   public validateTheory(e: Event): void {
     if (!(e instanceof SubmitEvent)) return;
     e.preventDefault();
 
     const formData: FormData = new FormData(e.target as HTMLFormElement, e.submitter);
-    const formDataArray: [string, FormDataEntryValue][] = Array.from(formData);
-    let score: number = 0;
+    const results: HypothesisValidationResult[] = this.calculateResults(formData);
+    const theoryModal: UIComponent = this.uiManager.getComponentById("theory-modal");
+    const resultsModal: UIComponent = this.uiManager.getComponentById("results-modal");
+    const resultsScreen: ResultsScreen = new ResultsScreen(
+      "results-screen",
+      results,
+      () => this.stop(),
+      () => this.restartGame()
+    );
+
+    resultsScreen.build();
+    resultsScreen.appendSelf(resultsModal);
+    theoryModal.hide();
+    resultsModal.show();
+    this.uiManager.registerComponent(resultsScreen);
+  }
+
+  private calculateResults(data: FormData): HypothesisValidationResult[] {
+    const formDataArray: [string, FormDataEntryValue][] = Array.from(data);
+    const results: HypothesisValidationResult[] = [];
+    const components: AbstractUIComponent[] = this.uiManager.getAllComponents();
 
     this.allowedShapes.forEach((s) => {
       const playerHypothesis = formDataArray.reduce<{
@@ -89,20 +129,14 @@ export class GameManager {
         (h) => h.id === playerHypothesis.title
       ) as AbstractHypothesis;
       const result: HypothesisValidationResult = validator.validate(
-        this.uiManager.getAllComponents(),
+        components,
         s,
         playerHypothesis.color as EntityColor
       );
-
-      result.correct && score++;
-      console.log(result.message);
+      results.push(result);
     });
 
-    console.log(
-      `Resultado: ${score}/${this.allowedShapes.length}: ${
-        score === this.allowedShapes.length ? "Vitória!" : "Derrota..."
-      }`
-    );
+    return results;
   }
 
   private resetGameState(): void {
@@ -198,7 +232,7 @@ export class GameManager {
 
   private destroyEntities(): void {
     this.uiManager.getAllComponents().forEach((c) => {
-      if (c instanceof Entity || c instanceof HypothesesUIComponent) {
+      if (c instanceof Entity || c instanceof HypothesesUIComponent || c instanceof ResultsScreen) {
         c.destroy();
         this.uiManager.unregisterComponent(c);
       }
