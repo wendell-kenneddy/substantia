@@ -155,13 +155,8 @@ export class ApplicationContext {
       config.MAX_ACTION_POINTS,
       config.MAX_ACTION_POINTS
     );
-    const elapsedTimeProgressBar = new ProgressBar(
-      "elapsed-time-progress-bar",
-      config.MAX_ACTION_POINTS * config.ELAPSED_TIME_PER_ACTION_POINT_CONSUMED,
-      0
-    );
+
     this._UIManager.registerComponent(actionPointsProgressBar);
-    this._UIManager.registerComponent(elapsedTimeProgressBar);
   }
 
   private registerActionPointsCounterUIComponent(): void {
