@@ -36,6 +36,7 @@ export class ApplicationContext {
     this.registerHypothesesContainerUIComponent();
     this.registerCloseTheoryModalUIComponent();
     this.registerTheoryFormUIComponent();
+    this.registerResultsModalUIComponent();
   }
 
   private attachUIComponentsActions(): void {
@@ -50,6 +51,10 @@ export class ApplicationContext {
     this.attachOpenTheoryModalButtonActions();
     this.attachCloseTheoryModalButtonActions();
     this.attachTheoryFormActions();
+  }
+
+  private registerResultsModalUIComponent(): void {
+    this._UIManager.registerComponent(new UIComponent("results-modal"));
   }
 
   private registerHypothesesContainerUIComponent(): void {
